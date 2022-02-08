@@ -39,9 +39,9 @@ namespace personalDev.MotHistory
             }
 
             log.LogInformation("C# HTTP trigger function processed a request.");
-            
+
             //Request is not valid
-            return new BadRequestObjectResult("Something went wrong. Make sure to include 'registrationNumber' in your request body.");
+            return new BadRequestObjectResult("Something went wrong. Make sure to include 'registrationNumber' in your request body or as query param.");
         }
     }
 }
