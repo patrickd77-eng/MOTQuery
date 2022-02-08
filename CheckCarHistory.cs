@@ -41,7 +41,7 @@ namespace personalDev.MotHistory
             }
 
             //Request is not valid
-            return new BadRequestObjectResult("Something went wrong. Make sure to include 'registrationNumber' in your request.");
+            return new BadRequestObjectResult("Something went wrong. Make sure to include 'registrationNumber' in your request body.");
 
 
 
