@@ -10,7 +10,6 @@ using Newtonsoft.Json;
 using personalDev.MotHistory.Validation;
 using personalDev.MotHistory.Lookup;
 
-
 namespace personalDev.MotHistory
 {
     public static class MotHistoryFunction

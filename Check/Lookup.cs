@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace personalDev.MotHistory.Lookup
 {
@@ -13,8 +14,11 @@ namespace personalDev.MotHistory.Lookup
         {
             //Uri
             var uri = "https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles";
-            //Api Key
+            //Api Key LOCAL
             client.DefaultRequestHeaders.Add("x-api-key", Environment.GetEnvironmentVariable("Dvla_Api_Key"));
+            //Api Key PROD
+            var config = new ConfigurationBuilder().AddEnvironmentVariables().Build();
+            var secret = config ["DvlaApiKey"];
             //Json
             var data = new RegistrationNumber { registrationNumber = input };
             //POST
