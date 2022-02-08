@@ -9,16 +9,15 @@ namespace personalDev.MotHistory.Lookup
 {
     public class MotChecker
     {
-        static HttpClient client = new HttpClient();
         public async Task<string> GetMotHistory(string input)
         {
+            HttpClient client = new HttpClient();
             //Uri
             var uri = "https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles";
             //Api Key LOCAL
-            client.DefaultRequestHeaders.Add("x-api-key", Environment.GetEnvironmentVariable("Dvla_Api_Key"));
+            //client.DefaultRequestHeaders.Add("x-api-key", Environment.GetEnvironmentVariable("DvlaApiKey"));
             //Api Key PROD
-            var config = new ConfigurationBuilder().AddEnvironmentVariables().Build();
-            var secret = config ["DvlaApiKey"];
+            client.DefaultRequestHeaders.Add("x-api-key", Environment.GetEnvironmentVariable("DvlaApiKey", EnvironmentVariableTarget.Process));
             //Json
             var data = new RegistrationNumber { registrationNumber = input };
             //POST
