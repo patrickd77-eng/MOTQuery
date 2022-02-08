@@ -22,20 +22,25 @@ namespace personalDev.MotHistory
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            // Initialisation and validation.
+            // Initialise
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             string registration = req.Query["registrationNumber"];
             registration = registration ?? data?.registration;
+
+            //Validate
             var validation = new RegistrationValidation();
-            var lookup = new MotChecker();
             bool verified = validation.ValidateRegistration(registration);
 
+            //Process request
             if (verified)
             {
-                return new OkObjectResult(lookup.GetMotHistory(registration));
+                var lookup = new MotChecker();
+                var motApi = await lookup.GetMotHistory(registration);
+                return new OkObjectResult(motApi.ToString());
             }
 
+            //Request is not valid
             return new BadRequestObjectResult("Something went wrong. Make sure to include 'registrationNumber' in your request.");
 
 
