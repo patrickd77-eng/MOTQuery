@@ -14,9 +14,7 @@ namespace personalDev.MotHistory.Lookup
             HttpClient client = new HttpClient();
             //Uri
             var uri = "https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles";
-            //Api Key LOCAL
-            //client.DefaultRequestHeaders.Add("x-api-key", Environment.GetEnvironmentVariable("DvlaApiKey"));
-            //Api Key PROD
+            //Api Key
             client.DefaultRequestHeaders.Add("x-api-key", Environment.GetEnvironmentVariable("DvlaApiKey", EnvironmentVariableTarget.Process));
             //Json
             var data = new RegistrationNumber { registrationNumber = input };

@@ -19,31 +19,29 @@ namespace personalDev.MotHistory
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
 
             // Initialise
+            string registrationNumber = req.Query["registrationNumber"];
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            string registration = req.Query["registrationNumber"];
-            registration = registration ?? data?.registration;
+            registrationNumber = registrationNumber ?? data?.registrationNumber;
 
             //Validate
             var validation = new RegistrationValidation();
-            bool verified = validation.ValidateRegistration(registration);
+            bool verified = validation.ValidateRegistration(registrationNumber);
 
             //Process request
             if (verified)
             {
                 var lookup = new MotChecker();
-                var motApi = await lookup.GetMotHistory(registration);
+                var motApi = await lookup.GetMotHistory(registrationNumber);
                 return new OkObjectResult(motApi.ToString());
             }
 
+            log.LogInformation("C# HTTP trigger function processed a request.");
+            
             //Request is not valid
             return new BadRequestObjectResult("Something went wrong. Make sure to include 'registrationNumber' in your request body.");
-
-
-
         }
     }
 }
